@@ -134,7 +134,7 @@ app.get('/speedtest', async (req, res) => {
             verbose: false,
             timeout: 10000,
             https: true,
-            urlCount: 5,
+            urlCount: 2,
             bufferSize: 8,
             unit: FastSpeedtest.UNITS.Mbps,
             proxy: 'http://optional:auth@my-proxy:123'
@@ -154,7 +154,7 @@ app.get('/speedtest', async (req, res) => {
 });
 
 // Start the server
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 5000;
 app.listen(port, () => {
     console.log(`Server is running on port ${port}`);
 });

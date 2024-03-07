@@ -1,57 +1,143 @@
-<!-- <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Internet Speed Test</title>
-    <link rel="stylesheet" href="css/style.css">
-</head>
-<body>
-    <div class="container">
-        <header>
-            <img src="logoslow.png" alt="Your Logo" class="logo">
-            <h1>Internet Speed Test</h1>
-        </header>
-        <main>
-            <div class="speed-test">
-                <h2 id="speedResult"></h2> -->
-                <!-- <h2>Checking Your Internet Speed...</h2>
-                <p>Please wait a moment...</p> -->
-                <!-- <button id="startTest">Start Speed Test</button>
-            </div>
-        </main>
-        <footer>
-        </footer>
-    </div>
-    <script src="script.js"></script>
-    
-</body>
-</html> -->
-
-
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Internet Speed Test</title>
-    <link rel="stylesheet" href="css/style.css">
-</head>
-<body>
+    <link rel="stylesheet" href="css/style.css" />
+    <style>
+      .hidden {
+        display: none;
+      }
+    </style>
+  </head>
+  <body>
     <div class="container">
-        <header>
-            <img src="logoslow.png" alt="Your Logo" class="logo">
-            <h1>Internet Speed Test</h1>
-        </header>
-        <main>
-            <div class="speed-test">
-                <h2 id="speedResult"></h2>
-                <button id="startTest">Start Speed Test</button> <!-- Button to start the speed test -->
-            </div>
-        </main>
-        <footer>
-        </footer>
+      <header>
+        <img src="logoslow.png" alt="Your Logo" class="logo" />
+        <h1>Internet Speed Test</h1>
+      </header>
+      <main>
+        <div class="speed-test">
+          <h2 id="speedResult" class="hidden">Download Speed: 0 Mbps</h2>
+          <h2 class="hidden">Upload Speed: 0 Mbps</h2>
+          <button
+            id="startTest"
+            onclick="startSpeedTest()"
+            style="background-color: transparent; border: none"
+          >
+            <svg
+              id="changeColor"
+              fill="#DC7633"
+              xmlns="http://www.w3.org/2000/svg"
+              xmlns:xlink="http://www.w3.org/1999/xlink"
+              width="200"
+              height="200"
+              viewBox="0 0 375 374.9999"
+              version="1.0"
+            >
+              <defs></defs>
+              <g></g>
+              <g id="inner-icon" transform="translate(85, 75)">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="263"
+                  height="263"
+                  fill="currentColor"
+                  class="bi bi-play"
+                  viewBox="0 0 16 16"
+                  id="IconChangeColor"
+                >
+                  <path
+                    d="M10.804 8 5 4.633v6.734L10.804 8zm.792-.696a.802.802 0 0 1 0 1.392l-6.363 3.692C4.713 12.69 4 12.345 4 11.692V4.308c0-.653.713-.998 1.233-.696l6.363 3.692z"
+                    id="mainIconPathAttribute"
+                    fill="#0fea0b"
+                    stroke-width="0.3"
+                    stroke="#000000"
+                    filter="url(#shadow)"
+                  ></path>
+                  <animateTransform
+                    href="#IconChangeColor"
+                    attributeType="xml"
+                    attributeName="transform"
+                    type="rotate"
+                    from="0"
+                    to="359"
+                    dur="2s"
+                    repeatCount="indefinite"
+                  ></animateTransform>
+                  <filter id="shadow">
+                    <feDropShadow
+                      id="shadowValue"
+                      stdDeviation="0.2"
+                      dx="0"
+                      dy="0"
+                      flood-color="black"
+                    ></feDropShadow>
+                  </filter>
+                  <filter id="shadow">
+                    <feDropShadow
+                      id="shadowValue"
+                      stdDeviation=".5"
+                      dx="0"
+                      dy="0"
+                      flood-color="black"
+                    ></feDropShadow>
+                  </filter>
+                </svg>
+              </g>
+            </svg>
+          </button>
+        </div>
+      </main>
+      <footer></footer>
     </div>
-    <script src="script.js"></script>
-</body>
+
+    <script>
+      let speedInterval;
+      let downloadSpeed = 0;
+      let uploadSpeed = 0;
+
+      function updateSpeed() {
+        // Increment or decrement download and upload speeds randomly
+        downloadSpeed = Math.max(
+          0,
+          Math.min(downloadSpeed + Math.floor(Math.random() * 300) - 150, 900)
+        );
+        uploadSpeed = Math.max(
+          0,
+          Math.min(uploadSpeed + Math.floor(Math.random() * 300) - 150, 900)
+        );
+        // Update the displayed speeds
+        const speedResult = document.getElementById("speedResult");
+        speedResult.innerHTML = `Download Speed: ${downloadSpeed} Kbps<br>Upload Speed: ${uploadSpeed} Kbps`;
+      }
+
+      function startSpeedTest() {
+        // Display initial speeds
+        const speedResult = document.getElementById("speedResult");
+        speedResult.classList.remove("hidden");
+        speedResult.innerHTML = `Download Speed: ${downloadSpeed} Kbps<br>Upload Speed: ${uploadSpeed} Kbps`;
+        // Hide the button
+        const startButton = document.getElementById("startTest");
+        startButton.style.display = "none";
+        // Start updating speeds every 5 seconds
+        speedInterval = setInterval(updateSpeed, 5000);
+        // Fetch final speeds after 60 seconds
+        setTimeout(() => {
+          clearInterval(speedInterval);
+          fetch("/speedtest")
+            .then((response) => response.json())
+            .then((data) => {
+              const finalDownloadSpeed = parseFloat(data.downloadSpeed).toFixed(
+                2
+              );
+              const finalUploadSpeed = parseFloat(data.uploadSpeed).toFixed(2);
+              speedResult.innerHTML = `Download Speed: ${finalDownloadSpeed} Mbps<br>Upload Speed: ${finalUploadSpeed} Mbps`;
+            })
+            .catch((error) => console.error(error));
+        }, 60000);
+      }
+    </script>
+  </body>
 </html>
