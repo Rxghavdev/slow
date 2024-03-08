@@ -59,13 +59,44 @@ main {
   justify-content: center;
 }
 
+/* .speed-test {
+  color:#fff;
+  text-align: center;
+  transition: transform 0.3s ease; 
+} */
+
+/* .speed-test:hover {
+  transform: scale(1.05); 
+} */
+
+
 .speed-test {
+  color: #fff;
   text-align: center;
   transition: transform 0.3s ease; /* Smooth transition effect */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
-.speed-test:hover {
-  transform: scale(1.05); /* Scale up on hover */
+.speed-box {
+  /* background-color: #53d13c;  Background color of the speed boxes  */
+  background-color: #1e6112;
+  padding: 10px; /* Padding around the speed text */
+  margin: 10px; /* Margin between speed boxes */
+  border-radius: 10px; /* Border radius for rounded corners */
+  flex-grow: 1; /* Allow the boxes to grow to fill the available space */
+}
+
+.speed-box:hover {
+  background-color: #555; /* Change background color on hover */
+}
+
+.mainContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 
 footer {
@@ -79,7 +110,7 @@ footer {
 }
 
 .logo {
-  max-width: 250px;
+  max-width: 18%;
   height: auto;
   transition: max-width 0.3s ease, transform 0.3s ease; /* Smooth transition effect */
 }
@@ -115,8 +146,9 @@ bodY {
 }
 .wave {
   width: 5px;
-  height: 100px;
-  background: linear-gradient(45deg, cyan, #fff);
+  height: 75px;
+  /* background: linear-gradient(45deg, cyan, #fff); */
+  background: linear-gradient(45deg, #1e6112, #fff);
   margin: 10px;
   animation: wave 1s linear infinite;
   border-radius: 20px;

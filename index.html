@@ -16,12 +16,19 @@
       <header>
         <img src="logoslow.png" alt="Your Logo" class="logo" />
       </header>
-      <main>
+      <main class="mainContainer">
         
         <div class="speed-test">
-          <h1 class="title">Internet Speed Test</h1>
+          <!-- <h1 class="title">Internet Speed Test</h1>
           <h2 id="speedResult" class="hidden">Download Speed: 0 Mbps</h2>
-          <h2 class="hidden">Upload Speed: 0 Mbps</h2>
+          <h2 class="hidden">Upload Speed: 0 Mbps</h2> -->
+          <h1 class="title">Life's too fast, slow down with Slow.com to check your internet speed.</h1>
+          <div class="">
+            <h2 id="speedResult" class="speed-box hidden">Download Speed: 0 Mbps</h2>
+          </div>
+          <!-- <div class="speed-box">
+            <h2 id="speedResult" class="hidden">Upload Speed: 0 Mbps</h2>
+          </div> -->
           <button
             id="startTest"
             onclick="startSpeedTest()"
@@ -89,6 +96,7 @@
               </g>
             </svg>
           </button>
+          
         </div>
         <div id="loading" class="hidden">
           <div class="center">
@@ -132,6 +140,8 @@
           // Display loading animation
         document.getElementById("loading").classList.remove("hidden");
 
+
+        document.querySelector(".title").style.display = "none";
         // Display initial speeds
         const speedResult = document.getElementById("speedResult");
         speedResult.classList.remove("hidden");
