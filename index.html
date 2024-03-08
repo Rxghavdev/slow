@@ -15,10 +15,11 @@
     <div class="container">
       <header>
         <img src="logoslow.png" alt="Your Logo" class="logo" />
-        <h1>Internet Speed Test</h1>
       </header>
       <main>
+        
         <div class="speed-test">
+          <h1 class="title">Internet Speed Test</h1>
           <h2 id="speedResult" class="hidden">Download Speed: 0 Mbps</h2>
           <h2 class="hidden">Upload Speed: 0 Mbps</h2>
           <button
@@ -56,7 +57,7 @@
                     stroke="#000000"
                     filter="url(#shadow)"
                   ></path>
-                  <animateTransform
+                  <!-- <animateTransform
                     href="#IconChangeColor"
                     attributeType="xml"
                     attributeName="transform"
@@ -65,7 +66,7 @@
                     to="359"
                     dur="2s"
                     repeatCount="indefinite"
-                  ></animateTransform>
+                  ></animateTransform> -->
                   <filter id="shadow">
                     <feDropShadow
                       id="shadowValue"
@@ -88,6 +89,20 @@
               </g>
             </svg>
           </button>
+        </div>
+        <div id="loading" class="hidden">
+          <div class="center">
+            <div class="wave"></div>
+            <div class="wave"></div>
+            <div class="wave"></div>
+            <div class="wave"></div>
+            <div class="wave"></div>
+            <div class="wave"></div>
+            <div class="wave"></div>
+            <div class="wave"></div>
+            <div class="wave"></div>
+            <div class="wave"></div>
+          </div>
         </div>
       </main>
       <footer></footer>
@@ -114,6 +129,9 @@
       }
 
       function startSpeedTest() {
+          // Display loading animation
+        document.getElementById("loading").classList.remove("hidden");
+
         // Display initial speeds
         const speedResult = document.getElementById("speedResult");
         speedResult.classList.remove("hidden");
@@ -121,6 +139,7 @@
         // Hide the button
         const startButton = document.getElementById("startTest");
         startButton.style.display = "none";
+        
         // Start updating speeds every 5 seconds
         speedInterval = setInterval(updateSpeed, 5000);
         // Fetch final speeds after 60 seconds
@@ -134,7 +153,10 @@
               );
               const finalUploadSpeed = parseFloat(data.uploadSpeed).toFixed(2);
               speedResult.innerHTML = `Download Speed: ${finalDownloadSpeed} Mbps<br>Upload Speed: ${finalUploadSpeed} Mbps`;
+              const loading = document.getElementById("loading");
+              loading.style.display = "none";
             })
+            
             .catch((error) => console.error(error));
         }, 60000);
       }

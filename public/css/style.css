@@ -1,10 +1,11 @@
-body,
+
 html {
   margin: 0;
   padding: 0;
   font-family: Arial, sans-serif;
   height: 100%;
-  background-color: #283593;
+  /* background-color: #283593; */
+  background-color: #000;
 }
 .button-container {
   margin-top: 20px; /* Add some top margin */
@@ -17,9 +18,14 @@ html {
   justify-content: space-between;
   min-height: 100vh;
 }
+.body{
+  color:#ffff;
+}
 
 header {
-  background-color: #283593;
+  /* background-color: #283593; */
+  background-color: #000;
+  /* color: #ffff; */
   color: #ffff;
   padding: 20px;
   text-align: center;
@@ -38,6 +44,14 @@ header img:hover {
   transform: scale(1.05); /* Scale up on hover */
 }
 
+.title{
+  /* color:#ffff; */
+  color:#ffff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 20px;
+}
 main {
   flex: 1;
   display: flex;
@@ -55,15 +69,17 @@ main {
 }
 
 footer {
-  background-color: #283593;
-  color: #fff;
+  /* background-color: #283593; */
+  background-color: #000;
+  /* color: #fff; */
+  color: #ffff;
   padding: 10px;
   text-align: center;
   transition: background-color 0.3s ease; /* Smooth transition effect */
 }
 
 .logo {
-  max-width: 300px;
+  max-width: 250px;
   height: auto;
   transition: max-width 0.3s ease, transform 0.3s ease; /* Smooth transition effect */
 }
@@ -72,3 +88,77 @@ footer {
   max-width: 320px; /* Increase size on hover */
   transform: scale(1.05); /* Scale up on hover */
 }
+
+
+
+
+bodY {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+
+}
+/* .center {
+  height: 20vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #000;
+} */
+.center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* flex-direction: column; Display waves in a column */
+  height: auto; /* Adjust height as needed */
+  margin-bottom: 20px; /* Add margin below the loading animation */
+}
+.wave {
+  width: 5px;
+  height: 100px;
+  background: linear-gradient(45deg, cyan, #fff);
+  margin: 10px;
+  animation: wave 1s linear infinite;
+  border-radius: 20px;
+
+}
+.wave:nth-child(2) {
+  animation-delay: 0.1s;
+}
+.wave:nth-child(3) {
+  animation-delay: 0.2s;
+}
+.wave:nth-child(4) {
+  animation-delay: 0.3s;
+}
+.wave:nth-child(5) {
+  animation-delay: 0.4s;
+}
+.wave:nth-child(6) {
+  animation-delay: 0.5s;
+}
+.wave:nth-child(7) {
+  animation-delay: 0.6s;
+}
+.wave:nth-child(8) {
+  animation-delay: 0.7s;
+}
+.wave:nth-child(9) {
+  animation-delay: 0.8s;
+}
+.wave:nth-child(10) {
+  animation-delay: 0.9s;
+}
+
+@keyframes wave {
+  0% {
+    transform: scale(0);
+  }
+  50% {
+    transform: scale(1);
+  }
+  100% {
+    transform: scale(0);
+  }
+}
+
