@@ -22,6 +22,28 @@ html {
   color:#ffff;
 }
 
+.heading {
+  color: transparent;
+  text-align: center;
+  margin-top: -10px;
+  margin-bottom: 20px; /* Slightly shift upwards */
+
+  font-family: "Arial Black", sans-serif; /* Use a bold font */
+  font-weight: bold; /* Ensure text is bold */
+  font-size: 40px; /* Adjust font size as needed */
+  overflow: hidden; /* Ensures text doesn't overflow when animating */
+  background: linear-gradient(
+    45deg,
+    #004e00,
+    #1a6501,
+    #018901,
+    #42d702,
+    #37ff00
+  );
+  -webkit-background-clip: text; /* Clip the background to the text */
+  background-clip: text;
+}
+
 header {
   /* background-color: #283593; */
   background-color: #000;
