@@ -98,18 +98,15 @@
                 </svg>
               </g>
             </svg>
-          <div class = "reload " class = "hidden">
+          <!-- <div class = "reload"> -->
           </button>
-          <button id="reloadButton" style="display: none;"></button>
-          <svg xmlns="http://www.w3.org/2000/svg" width="224" height="224" fill="currentColor" class="bi bi-arrow-repeat" viewBox="0 0 16 16" id="IconChangeColor">
-            <path d="M11.534 7h3.932a.25.25 0 0 1 .192.41l-1.966 2.36a.25.25 0 0 1-.384 0l-1.966-2.36a.25.25 0 0 1 .192-.41zm-11 2h3.932a.25.25 0 0 0 .192-.41L2.692 6.23a.25.25 0 0 0-.384 0L.342 8.59A.25.25 0 0 0 .534 9z" id="mainIconPathAttribute" fill="#00ff11"></path>
-            <path fill-rule="evenodd" d="M8 3c-1.552 0-2.94.707-3.857 1.818a.5.5 0 1 1-.771-.636A6.002 6.002 0 0 1 13.917 7H12.9A5.002 5.002 0 0 0 8 3zM3.1 9a5.002 5.002 0 0 0 8.757 2.182.5.5 0 1 1 .771.636A6.002 6.002 0 0 1 2.083 9H3.1z" id="mainIconPathAttribute" fill="#00ff11"></path>
-          </svg>
-
-          
+          <button id="reloadButton"; onclick="retrySpeedtest() " style="background-color: #000000; border: none; padding: 0; display: none;">
+            <svg xmlns="http://www.w3.org/2000/svg" width="200" height="200" fill="#00ff11" class="bi bi-arrow-repeat" viewBox="0 0 16 16" id="IconChangeColor">
+              <path d="M11.534 7h3.932a.25.25 0 0 1 .192.41l-1.966 2.36a.25.25 0 0 1-.384 0l-1.966-2.36a.25.25 0 0 1 .192-.41zm-11 2h3.932a.25.25 0 0 0 .192-.41L2.692 6.23a.25.25 0 0 0-.384 0L.342 8.59A.25.25 0 0 0 .534 9z" id="mainIconPathAttribute" fill="#00ff11"></path>
+              <path fill-rule="evenodd" d="M8 3c-1.552 0-2.94.707-3.857 1.818a.5.5 0 1 1-.771-.636A6.002 6.002 0 0 1 13.917 7H12.9A5.002 5.002 0 0 0 8 3zM3.1 9a5.002 5.002 0 0 0 8.757 2.182.5.5 0 1 1 .771.636A6.002 6.002 0 0 1 2.083 9H3.1z" id="mainIconPathAttribute" fill="#00ff11"></path>
+            </svg>
           </button>
-
-        </div>
+        <!-- </div> -->
         <div/>
         <div id="loading" class="hidden">
           <div class="center">
@@ -154,8 +151,17 @@
       function startSpeedTest() {
           // Display loading animation
         document.getElementById("loading").classList.remove("hidden");
-        // displayVideo();
+        // document.getElementById("reloadButton").classList.add("hidden");
 
+        // var videoElement2 = document.getElementById('output_video');
+        // if (videoElement2) {
+        //   videoElement2.pause();
+        //   videoElement2.removeAttribute('src'); // empty source
+        //   videoElement2.load();
+        // }
+
+        
+        
         document.querySelector(".title").style.display = "none";
         // Display initial speeds
         const speedResult = document.getElementById("speedResult");
@@ -164,7 +170,11 @@
         // Hide the button
         const startButton = document.getElementById("startTest");
         startButton.style.display = "none";
+
+        const reloadButton = document.getElementById("reloadButton");
+        reloadButton.style.display = "none";
         
+
         // Start updating speeds every 5 seconds
         speedInterval = setInterval(updateSpeed, 5000);
         // Fetch final speeds after 60 seconds
@@ -181,11 +191,15 @@
               document.getElementById("reloadButton").style.display = "inline";
               const loading = document.getElementById("loading");
               loading.style.display = "none";
-              
+              document.getElementById("reloadButton").classList.remove("hidden");
+
 
                 
               if(finalDownloadSpeed<5){
               displayVideo();
+              }
+              else if(finalDownloadSpeed>=5 && finalDownloadSpeed<15){
+                displayImage_med();
               }
               else{
                 displayImage();
@@ -195,12 +209,60 @@
             .catch((error) => console.error(error));
         }, 60000);
       }
-      
-    
+
+      function retrySpeedtest() {
+    document.getElementById("loading").style.display = "block";
+
+    const reloadButton = document.getElementById("reloadButton");
+    if (reloadButton) {
+      reloadButton.style.display = "none";
+    }
+    const displayImage = document.getElementById("img");
+    if (displayImage) {
+      displayImage.style.display = "none";
+    }
+    const displayVideo = document.getElementById("output_video");
+    if (displayVideo) {
+      displayVideo.style.display = "none";
+    }
+    const displayImage_med = document.getElementById("img_med");
+    if (displayImage_med) {
+      displayImage_med.style.display = "none";
+    }
+    const speedResult = document.getElementById("speedResult");
+    if (speedResult) {
+      speedResult.classList.remove("hidden");
+      speedResult.innerHTML = `Download Speed: ${downloadSpeed} Kbps<br>Upload Speed: ${uploadSpeed} Kbps`;
+    }
+    speedInterval = setInterval(updateSpeed, 5000);
+
+    fetch("/speedtest")
+        .then((response) => response.json())
+        .then((data) => {
+            const finalDownloadSpeed = parseFloat(data.downloadSpeed).toFixed(2);
+            const finalUploadSpeed = parseFloat(data.uploadSpeed).toFixed(2);
+            speedResult.innerHTML = `Download Speed: ${finalDownloadSpeed} Mbps<br>Upload Speed: ${finalUploadSpeed} Mbps`;
+            document.getElementById("reloadButton").style.display = "inline";
+            const loading = document.getElementById("loading");
+            loading.style.display = "none";
+            document.getElementById("reloadButton").classList.remove("hidden");
+
+            if (finalDownloadSpeed < 5) {
+                displayVideo.style.display = "block";
+            } else if (finalDownloadSpeed >= 5 && finalDownloadSpeed < 15) {
+                displayImage_med.style.display = "block";
+            } else {
+                displayImage.style.display = "block";
+            }
+        })
+        .catch((error) => console.error(error));
+}
+
     function displayVideo() {
     // Code to display the video automatically after loading effect is hidden
     // You can modify this part to suit your video implementation
     const videoElement = document.createElement("video");
+    videoElement.id = "output_video"; // give id to the video tag
     videoElement.src = "slow_meme.mp4";
     videoElement.controls = true;
     videoElement.autoplay = true;
@@ -213,15 +275,34 @@
     const mainContainer = document.querySelector('.mainContainer');
     mainContainer.insertBefore(videoElement, mainContainer.firstChild);
 }
+function displayImage_med() {
+    const imageElement = document.createElement("img");
+    imageElement.id = "img_med"; // give id to the image tag
+    imageElement.src = "ted.webp";
+    imageElement.width = "500"; displayImage_med// Set custom width
+    imageElement.height = "300"; // Set custom height
+    imageElement.style.display = "block"; // Set display to block for center alignment
+    imageElement.style.margin = "auto"; // Set margin to auto for center alignment
+    document.body.appendChild(imageElement);
+
+    const mainContainer = document.querySelector('.mainContainer');
+    mainContainer.insertBefore(imageElement, mainContainer.firstChild);
+
+}
 
 function displayImage() {
     const imageElement = document.createElement("img");
+    imageElement.id = "img"; // give id to the image tag
     imageElement.src = "fast_meme.jpeg";
     imageElement.width = "480"; // Set custom width
     imageElement.height = "270"; // Set custom height
     imageElement.style.display = "block"; // Set display to block for center alignment
     imageElement.style.margin = "auto"; // Set margin to auto for center alignment
     document.body.appendChild(imageElement);
+
+    const mainContainer = document.querySelector('.mainContainer');
+    mainContainer.insertBefore(imageElement, mainContainer.firstChild);
+
 }
       
     </script>
