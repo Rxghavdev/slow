@@ -16,7 +16,7 @@
       <header>
         <img src="logo.png" alt="Your Logo" class="logo" />
         <h1 class="heading">
-          Life's too fast,<br> slow down with Slow.com<br> to check your internet speed.
+          Life's too fast,<br> slow down with Slow.com<br> 
         </h1>
       </header>
       <main class="mainContainer">
@@ -141,7 +141,7 @@
       function startSpeedTest() {
           // Display loading animation
         document.getElementById("loading").classList.remove("hidden");
-
+        // displayVideo();
 
         document.querySelector(".title").style.display = "none";
         // Display initial speeds
@@ -167,11 +167,42 @@
               speedResult.innerHTML = `Download Speed: ${finalDownloadSpeed} Mbps<br>Upload Speed: ${finalUploadSpeed} Mbps`;
               const loading = document.getElementById("loading");
               loading.style.display = "none";
+              if(finalDownloadSpeed<5){
+              displayVideo();
+              }
+              else{
+                displayImage();
+              }
             })
             
             .catch((error) => console.error(error));
         }, 60000);
       }
+      function displayVideo() {
+    // Code to display the video automatically after loading effect is hidden
+    // You can modify this part to suit your video implementation
+    const videoElement = document.createElement("video");
+    videoElement.src = "slow_meme.mp4";
+    videoElement.controls = true;
+    videoElement.autoplay = true;
+    videoElement.width = "480"; // Set custom width
+    videoElement.height = "270"; // Set custom height
+    videoElement.style.display = "block"; // Set display to block
+    videoElement.style.margin = "auto"; // Set margin to auto for center alignmen
+    videoElement.removeAttribute('controls');
+    document.body.appendChild(videoElement);
+     
+}
+function displayImage() {
+    const imageElement = document.createElement("img");
+    imageElement.src = "fast_meme.jpeg";
+    imageElement.width = "480"; // Set custom width
+    imageElement.height = "270"; // Set custom height
+    imageElement.style.display = "block"; // Set display to block for center alignment
+    imageElement.style.margin = "auto"; // Set margin to auto for center alignment
+    document.body.appendChild(imageElement);
+}
+
     </script>
   </body>
 </html>
