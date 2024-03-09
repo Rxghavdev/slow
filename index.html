@@ -16,7 +16,7 @@
       <header>
         <img src="logo.png" alt="Your Logo" class="logo" />
         <h1 class="heading">
-          Life's too fast,<br> slow down with Slow.com<br> 
+          Life's too fast,<br> slow down with Sloww.tech<br> 
         </h1>
       </header>
       <main class="mainContainer">
@@ -98,8 +98,19 @@
                 </svg>
               </g>
             </svg>
+          <div class = "reload " class = "hidden">
           </button>
+          <button id="reloadButton" style="display: none;"></button>
+          <svg xmlns="http://www.w3.org/2000/svg" width="224" height="224" fill="currentColor" class="bi bi-arrow-repeat" viewBox="0 0 16 16" id="IconChangeColor">
+            <path d="M11.534 7h3.932a.25.25 0 0 1 .192.41l-1.966 2.36a.25.25 0 0 1-.384 0l-1.966-2.36a.25.25 0 0 1 .192-.41zm-11 2h3.932a.25.25 0 0 0 .192-.41L2.692 6.23a.25.25 0 0 0-.384 0L.342 8.59A.25.25 0 0 0 .534 9z" id="mainIconPathAttribute" fill="#00ff11"></path>
+            <path fill-rule="evenodd" d="M8 3c-1.552 0-2.94.707-3.857 1.818a.5.5 0 1 1-.771-.636A6.002 6.002 0 0 1 13.917 7H12.9A5.002 5.002 0 0 0 8 3zM3.1 9a5.002 5.002 0 0 0 8.757 2.182.5.5 0 1 1 .771.636A6.002 6.002 0 0 1 2.083 9H3.1z" id="mainIconPathAttribute" fill="#00ff11"></path>
+          </svg>
+
+          
+          </button>
+
         </div>
+        <div/>
         <div id="loading" class="hidden">
           <div class="center">
             <div class="wave"></div>
@@ -122,6 +133,8 @@
       let speedInterval;
       let downloadSpeed = 0;
       let uploadSpeed = 0;
+
+      //const reloadButton =  document.getElementById("reloadButton");
 
       function updateSpeed() {
         // Increment or decrement download and upload speeds randomly
@@ -165,8 +178,12 @@
               );
               const finalUploadSpeed = parseFloat(data.uploadSpeed).toFixed(2);
               speedResult.innerHTML = `Download Speed: ${finalDownloadSpeed} Mbps<br>Upload Speed: ${finalUploadSpeed} Mbps`;
+              document.getElementById("reloadButton").style.display = "inline";
               const loading = document.getElementById("loading");
               loading.style.display = "none";
+              
+
+                
               if(finalDownloadSpeed<5){
               displayVideo();
               }
@@ -178,7 +195,9 @@
             .catch((error) => console.error(error));
         }, 60000);
       }
-      function displayVideo() {
+      
+    
+    function displayVideo() {
     // Code to display the video automatically after loading effect is hidden
     // You can modify this part to suit your video implementation
     const videoElement = document.createElement("video");
@@ -188,11 +207,13 @@
     videoElement.width = "480"; // Set custom width
     videoElement.height = "270"; // Set custom height
     videoElement.style.display = "block"; // Set display to block
-    videoElement.style.margin = "auto"; // Set margin to auto for center alignmen
+    videoElement.style.margin = "auto"; // Set margin to auto for center alignment
     videoElement.removeAttribute('controls');
-    document.body.appendChild(videoElement);
-     
+
+    const mainContainer = document.querySelector('.mainContainer');
+    mainContainer.insertBefore(videoElement, mainContainer.firstChild);
 }
+
 function displayImage() {
     const imageElement = document.createElement("img");
     imageElement.src = "fast_meme.jpeg";
@@ -202,7 +223,7 @@ function displayImage() {
     imageElement.style.margin = "auto"; // Set margin to auto for center alignment
     document.body.appendChild(imageElement);
 }
-
+      
     </script>
   </body>
 </html>
